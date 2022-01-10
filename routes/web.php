@@ -36,7 +36,7 @@ Route::get('/binusian-home', [BinusianController::class, 'getAllTicket']);
 Route::get('/insert-ticket', [BinusianController::class, 'getInsertTicketPage']);
 Route::post('/insert-ticket', [BinusianController::class, 'insertTicket']);
 Route::get('/detail-tickets/{id}', [BinusianController::class, 'detailTicket']);
-Route::post('insert-reply', [BinusianController::class, 'replyTicket']);
+Route::post('/insert-reply/{id}', [BinusianController::class, 'replyTicket']);
 /**
  * Route buat admin
  */

@@ -41,7 +41,7 @@ class BinusianController extends Controller
             'title' => $request->title,
             'description' => $request->description
         ]);
-        return redirect('binusian.binusian-home');
+        return redirect('/binusian-home');
     }
 
     public function detailTicket(Request $request)
@@ -57,7 +57,7 @@ class BinusianController extends Controller
             'selectedTicket' => $selectedTicket,
             'replies' => $messagesForParse
         ];
-        dd($data);
+        // dd($data);
         return view('binusian.detail-ticket', $data);
     }
 
