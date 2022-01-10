@@ -43,7 +43,7 @@ Route::post('/insert-reply/{id}', [BinusianController::class, 'replyTicket']);
  */
 Route::get('/admin-home/{categoryName}/{status}', [AdminController::class, 'getAdminPage']);
 Route::get('/detail-tickets/{id}/{status}', [AdminController::class, 'detailTicket']);
-Route::post('/insert-reply/{id}', [AdminController::class, 'replyTicket']);
+Route::post('/insert-reply-admin/{id}', [AdminController::class, 'replyTicket']);
 Route::post('/close-ticket/{id}', [AdminController::class, 'closeTicket']);
 Auth::routes();
 

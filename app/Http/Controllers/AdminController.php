@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Category;
 use App\Models\Message;
 use App\Models\ReportHeader;
 use App\Models\ReportMessage;
@@ -11,6 +11,7 @@ class AdminController extends Controller
 {
     public function getAdminPage(Request $request)
     {
+        $categories = Category::all();
         if ($request->categoryName == 'none' && $request->status == 'none') {
             $allTickets = ReportHeader::all();
         } else if ($request->categoryName != 'none' && $request->status == 'none') {
@@ -20,8 +21,25 @@ class AdminController extends Controller
         } else {
             $allTickets = ReportHeader::where('categoryId', $request->categoryName)->where('status', $request->status)->get();
         }
+        
+        $currCategoryName;
+
+        if($request->categoryName == 'none'){
+            $currCategoryName = $request->categoryName;
+        }else{
+            $category = Category::where('id', $request->categoryName)->get();
+            $currCategoryName = $category[0]->categoryName;
+        }
+        
+        $currCategory = $request->categoryName;
+        $currStatus = $request->status;
+
         $data = [
-            'tickets' => $allTickets
+            'tickets' => $allTickets,
+            'categories' => $categories,
+            'cc' => $currCategory,
+            'cs' => $currStatus,
+            'ccName' => $currCategoryName
         ];
         return view('admin.admin-home', $data);
     }
