@@ -16,8 +16,15 @@ class BinusianController extends Controller
          * Nimnya nanti ambil dr session 
          * */
         $tickets = ReportHeader::where('nim', '2201712345')->get();
+        $waitingTickets = [];
+        foreach ($tickets as $ticket) {
+            if ($ticket->status === 'waiting') {
+                array_push($waitingTickets, $ticket);
+            }
+        }
         $data = [
-            'createdTickets' => $tickets
+            'createdTickets' => $tickets,
+            'waitingTickets' => $waitingTickets
         ];
         return view('binusian.binusian-home', $data);
     }

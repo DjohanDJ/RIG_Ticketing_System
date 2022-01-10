@@ -5,31 +5,32 @@ jd disable aj buttonnya wrna abu2 gt) -->
 @extends('layouts.app')
 
 @section('extra-header')
-    <link rel="stylesheet" href="{{asset('css/binusian-home.css')}}">
+<link rel="stylesheet" href="{{asset('css/binusian-home.css')}}">
 @stop
 
 @section('content')
 
 <div class="container">
-    @if (count($createdTickets) < 2)
-        <a href="/insert-ticket" class="insert-button">+</a>
-    @endif
+    @if (count($createdTickets) < 2) <a href="/insert-ticket" class="insert-button">+</a>
+        @endif
 
-    <div class="ticket-item">
-        @foreach ($createdTickets as $c)
-        <div class="ticket">
-            <div class="list-desc">
-                <div class="item-title">{{$c->title}}</div>
-                <div class="item-desc">{{$c->description}}</div>
-                <div class="item-status">Status : <b>{{$c->status}}</b></div>
+        <div class="ticket-item">
+            @foreach ($createdTickets as $c)
+            <div class="ticket">
+                <div class="list-desc">
+                    <div class="item-title">{{$c->title}}</div>
+                    <div class="item-desc">{{$c->description}}</div>
+                    <div class="item-status">Status : <b>{{$c->status}}</b></div>
+                </div>
+                @if($c->status == 'on progress')
+                <div class="list-btn">
+                    <a href="/detail-tickets/{{$c->id}}" class="btn btn-primary">Detail</a>
+                </div>
+                @endif
             </div>
-            <div class="list-btn">
-                <a href="/detail-tickets/{{$c->id}}" class="btn btn-primary">Detail</a>
-            </div>
+            @endforeach
         </div>
-        @endforeach
-    </div>
-  
+
 </div>
 
 @stop

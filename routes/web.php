@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BinusianController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,10 @@ Route::post('/insert-reply/{id}', [BinusianController::class, 'replyTicket']);
 /**
  * Route buat admin
  */
+Route::get('/admin-home/{categoryName}/{status}', [AdminController::class, 'getAdminPage']);
+Route::get('/detail-tickets/{id}/{status}', [AdminController::class, 'detailTicket']);
+Route::post('/insert-reply/{id}', [AdminController::class, 'replyTicket']);
+Route::post('/close-ticket/{id}', [AdminController::class, 'closeTicket']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
