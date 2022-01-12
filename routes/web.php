@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BinusianController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Auth;
@@ -48,3 +49,4 @@ Route::post('/close-ticket/{id}', [AdminController::class, 'closeTicket']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'loginBimay']);
