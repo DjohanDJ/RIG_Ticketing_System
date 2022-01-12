@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use App\Models\Message;
 use App\Models\ReportHeader;
@@ -21,16 +22,16 @@ class AdminController extends Controller
         } else {
             $allTickets = ReportHeader::where('categoryId', $request->categoryName)->where('status', $request->status)->get();
         }
-        
-        $currCategoryName;
 
-        if($request->categoryName == 'none'){
+        $currCategoryName = '';
+
+        if ($request->categoryName == 'none') {
             $currCategoryName = $request->categoryName;
-        }else{
+        } else {
             $category = Category::where('id', $request->categoryName)->get();
             $currCategoryName = $category[0]->categoryName;
         }
-        
+
         $currCategory = $request->categoryName;
         $currStatus = $request->status;
 

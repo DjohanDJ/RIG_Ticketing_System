@@ -11,7 +11,7 @@ jd disable aj buttonnya wrna abu2 gt) -->
 @section('content')
 
 <div class="container">
-    @if (count($createdTickets) < 2) <a href="/insert-ticket" class="insert-button">+</a>
+    @if (count($waitingTickets) < 2) <a href="/insert-ticket" class="insert-button">+</a>
         @endif
 
         <div class="ticket-item">

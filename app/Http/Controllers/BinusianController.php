@@ -15,10 +15,10 @@ class BinusianController extends Controller
         /**
          * Nimnya nanti ambil dr session 
          * */
-        $tickets = ReportHeader::where('nim', '2201712345')->get();
+        $tickets = ReportHeader::where('nim', session()->get('username'))->get();
         $waitingTickets = [];
         foreach ($tickets as $ticket) {
-            if ($ticket->status === 'waiting') {
+            if ($ticket->status === 'waiting' || $ticket->status === 'on progress') {
                 array_push($waitingTickets, $ticket);
             }
         }
@@ -43,7 +43,7 @@ class BinusianController extends Controller
         // Nim ganti sesuai session
         ReportHeader::create([
             'categoryId' => $request->categoryName,
-            'nim' => '2201712345',
+            'nim' => session()->get('username'),
             'status' => 'waiting',
             'title' => $request->title,
             'description' => $request->description
@@ -74,7 +74,7 @@ class BinusianController extends Controller
         $reply = $request->reply;
         $createdMessage = Message::create([
             'messageContent' => $reply,
-            'messageSender' => '2201712345'
+            'messageSender' => session()->get('username')
         ]);
         ReportMessage::create([
             'reportId' => $request->id,

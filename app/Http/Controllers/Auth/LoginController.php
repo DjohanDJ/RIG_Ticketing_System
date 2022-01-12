@@ -42,9 +42,14 @@ class LoginController extends Controller
 
     public function loginBimay(Request $request)
     {
+
+        $superAdminList = [
+            "dj20-1"
+        ];
         $adminList = [
             "at20-1",
-            // "dy20-1"
+            // "dj20-1",
+            "cr20-1"
         ];
         $username = $request->username;
         $password = $request->password;
@@ -55,10 +60,19 @@ class LoginController extends Controller
             $url =  "$base_url" . "Account/LogOnBinusian";
             $isStudent = true;
         }
-        $response = Http::asForm()->post($url, [
+
+        $response = Http::withOptions([
+            'verify' => false,
+        ])->asForm()->post($url, [
             "username" => $username,
             "password" => $password
         ]);
+        // dd($response->json());
+        // $response = Http::asForm()->post($url, [
+        //     "username" => $username,
+        //     "password" => $password
+        // ]);
+        // dd($request);
         if ($response->successful() == false) {
             return redirect("login")->withErrors("Invalid Username or Password");
         }
@@ -70,7 +84,12 @@ class LoginController extends Controller
             $token = $response->json()["Token"]["token"];
             // login as student
             $new_url = $base_url . "Student";
-            $newResponse = Http::get($new_url, [
+            // $newResponse = Http::get($new_url, [
+            //     "nim" => $username
+            // ]);
+            $newResponse = Http::withOptions([
+                'verify' => false,
+            ])->asForm()->get($new_url, [
                 "nim" => $username
             ]);
             $name = $newResponse->json()["Name"];
@@ -82,12 +101,22 @@ class LoginController extends Controller
             if (in_array($username, $adminList)) {
                 $role = "Admin";
             }
+            if (in_array($username, $superAdminList)) {
+                $role = "SuperAdmin";
+            }
             $token = $response->json()["access_token"];
             $new_url = $base_url . "Assistant";
-            $newResponse = Http::get($new_url, [
+            // $newResponse = Http::get($new_url, [
+            //     "initial" => $username,
+            //     "generation" => substr($username, 2)
+            // ]);
+            $newResponse = Http::withOptions([
+                'verify' => false,
+            ])->asForm()->get($new_url, [
                 "initial" => $username,
                 "generation" => substr($username, 2)
             ]);
+
 
             $name = $newResponse->json()[0]["Name"];
         }
@@ -98,6 +127,7 @@ class LoginController extends Controller
         $request->session()->put('role', $role);
         $request->session()->put('token', $token);
         $request->session()->put('name', $name);
-        dd($request->session());
+        // dd($request->session());
+        return redirect('/super-admin-home');
     }
 }
